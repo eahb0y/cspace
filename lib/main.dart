@@ -1,3 +1,4 @@
+import 'package:cspace/screens/welcome_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -9,6 +10,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return const MaterialApp(
+      home: WelcomeScreen(),
+    );
   }
 }
