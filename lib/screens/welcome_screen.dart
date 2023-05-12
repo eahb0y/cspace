@@ -1,7 +1,11 @@
 import 'package:cspace/components/reusable_button.dart';
+import 'package:cspace/screens/qr_scan_screen.dart';
 import 'package:flutter/material.dart';
 
+import '../constants.dart';
+
 class WelcomeScreen extends StatelessWidget {
+  static String id = '/welcome_screen';
   const WelcomeScreen({Key? key}) : super(key: key);
 
   @override
@@ -13,23 +17,29 @@ class WelcomeScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            const Text('Welcome', style: TextStyle(
-              fontWeight: FontWeight.w500,
-              fontSize: 50,
-              color: Colors.black87
-            ),),
+            Text(
+              'Welcome',
+              style: welcomeStyle,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  height: 100,
+                  height: MediaQuery.of(context).size.height/5,
                   width: 100,
                   color: Colors.purple.shade800,
                 ),
-                const Column(
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Text("SPACE"),
-                    Text('coworking'),
+                    Text(
+                      "SPACE",
+                      style: spaceStyle,
+                    ),
+                    Text(
+                      'coworking',
+                      style: cowStyle,
+                    ),
                   ],
                 ),
               ],
@@ -48,6 +58,17 @@ class WelcomeScreen extends StatelessWidget {
                 ReusableButton(
                   onPressed: () {},
                   label: 'Register',
+                  color: Colors.black87,
+                  textColor: Colors.black45,
+                ),
+                const SizedBox(
+                  height: 25,
+                ),
+                ReusableButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, QRScanScreen.id);
+                  },
+                  label: 'QR-code',
                   color: Colors.black87,
                   textColor: Colors.black45,
                 )
