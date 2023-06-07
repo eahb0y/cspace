@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 class ReusableButton extends StatelessWidget {
   final void Function() onPressed;
   final String label;
-  final Color color;
   final Color textColor;
+  final Color color;
   const ReusableButton({
     Key? key,
     required this.onPressed,
     required this.label,
-    required this.color,
     required this.textColor,
+    required this.color,
   }) : super(key: key);
 
   @override
@@ -20,9 +20,9 @@ class ReusableButton extends StatelessWidget {
       height: 60,
       padding: const EdgeInsets.all(20),
       textColor: textColor,
+      color: color,
       onPressed: onPressed,
       shape: RoundedRectangleBorder(
-        side: BorderSide(color: color),
         borderRadius: BorderRadius.circular(50),
       ),
       child: Text(

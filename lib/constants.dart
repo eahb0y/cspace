@@ -16,3 +16,8 @@ TextStyle cowStyle = TextStyle(
     color: Colors.purple.shade600,
     fontWeight: FontWeight.w300
 );
+
+TextStyle clientsStyle = const TextStyle(
+ fontSize: 30,
+ color: Colors.black54,
+);
