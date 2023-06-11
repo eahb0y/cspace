@@ -19,7 +19,9 @@ class Client {
         .doc("100 hour")
         .collection(client.name)
         .doc(client.date)
-        .set({"checkIn": client.checkInTime});
+        .set({"checkIn": client.checkInTime,
+      "checkOut": "---"
+    });
   }
 
   Future addCheckOutTime(Client client) async {

@@ -1,22 +1,26 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-class GetUserName extends StatelessWidget {
+class GetUserName extends StatefulWidget {
   final String name;
-
   const GetUserName({super.key, required this.name});
 
+  @override
+  State<GetUserName> createState() => _GetUserNameState();
+}
+
+class _GetUserNameState extends State<GetUserName> {
   @override
   Widget build(BuildContext context) {
     CollectionReference users = FirebaseFirestore.instance
         .collection('Maksim Gorkiy')
         .doc('100 hour')
-        .collection(name);
+        .collection(widget.name);
     return FutureBuilder(
         future: users.get(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            final List<DocumentSnapshot?> docs = snapshot.data!.docs;
+            final List<DocumentSnapshot> docs = snapshot.data!.docs;
             return Row(
               children: [
                 Expanded(
@@ -33,7 +37,7 @@ class GetUserName extends StatelessWidget {
                                 ),
                                 child: Center(
                                     child: Text(
-                                  e!['checkIn'],
+                                      e['checkIn'],
                                   style: const TextStyle(
                                     fontSize: 21,
                                     color: Colors.white
@@ -50,13 +54,10 @@ class GetUserName extends StatelessWidget {
                 //   color: Colors.black,
                 //   thickness: 3, //thickness of divier line
                 // ),
-
-
-
                 Expanded(
                   child: Column(
                     children: docs
-                        .map((ele) => Padding(
+                        .map((e) => Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Container(
                         width: double.infinity,
@@ -67,7 +68,7 @@ class GetUserName extends StatelessWidget {
                         ),
                         child: Center(
                             child: Text(
-                              ele?['checkOut'] ?? 'adsadda',
+                              e['checkOut'],
                               style: const TextStyle(
                                   fontSize: 21,
                                   color: Colors.white
@@ -94,28 +95,6 @@ class GetUserName extends StatelessWidget {
   }
 }
 
-// FutureBuilder<DocumentSnapshot>(
-// future: users.get().then((value) => {
-// value.docs.forEach((element) {
-// print(element.data());
-// })
-// }), /// get all data from doc ///
-// builder:
-// (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-//
-// if (snapshot.hasError) {
-// return Text("Something went wrong");
-// }
-//
-// if (snapshot.hasData && !snapshot.data!.exists) {
-// return Text("Document does not exist");
-// }
-//
-// if (snapshot.connectionState == ConnectionState.done) {
-// Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
-// return Text("${data['checkIn']}");
-// }
-//
-// return Text("loading");
-// },
-// );
+
+
+/*   --                   fix checkOut `cause when it firstly check the checkIn does not work                         --*/

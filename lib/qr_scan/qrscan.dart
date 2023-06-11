@@ -1,28 +1,47 @@
 import 'dart:developer';
 import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cspace/servise/employee.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
-import 'package:cspace/servise/client.dart';
 
-class QRSanHour extends StatefulWidget {
-  final bool status;
+class QRViewExample extends StatefulWidget {
   String currentTime = DateFormat('hh:mm:ss a').format(DateTime.now());
   String currentDay = DateFormat('dd-MM-yyyy').format(DateTime.now());
-  QRSanHour({
+  QRViewExample({
     Key? key,
-    required this.status
   }) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _QRSanHourState();
+  State<StatefulWidget> createState() => _QRViewExampleState();
 }
 
-class _QRSanHourState extends State<QRSanHour> {
+class _QRViewExampleState extends State<QRViewExample> {
   Barcode? result;
   QRViewController? controller;
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
   bool isIconOne = true;
+
+  // void getUser() async {
+  //   try {
+  //     DocumentSnapshot snap2 = await FirebaseFirestore.instance
+  //         .collection('Maksim Gorkiy')
+  //         .doc('Night')
+  //         .collection(result!.code.toString())
+  //         .doc(widget.currentDay)
+  //         .get();
+  //     setState(() {
+  //       checkIn = snap2['checkIn'];
+  //       checkOut = snap2['checkOut'];
+  //     });
+  //   } catch (e) {
+  //     setState(() {
+  //       checkIn = "--/--";
+  //       checkOut = "--/--";
+  //     });
+  //   }
+  // }
 
   @override
   void reassemble() {
@@ -76,21 +95,19 @@ class _QRSanHourState extends State<QRSanHour> {
                     children: <Widget>[
                       Container(
                         margin: const EdgeInsets.all(8),
-                        child: widget.status ?  ElevatedButton(
-                          onPressed: () async {
-                            Client client = Client(name: result!.code.toString(), date: widget.currentDay, checkInTime: widget.currentTime, checkOutTime: widget.currentTime);
-                            client.addCheckINTime(client);
-                            Navigator.pop(context, (result!.code).toString());
+                        child: ElevatedButton(
+                          onPressed: () {
+                            String name = result!.code.toString();
+                            Employee employee = Employee(
+                              name: name,
+                              date: widget.currentDay,
+                              checkInTime: widget.currentTime,
+                              checkOutTime: widget.currentTime,
+                            );
+                            employee.addChekInChekOutTime(employee);
+                            Navigator.pop(context, name);
                           },
-                          child: const Text('Check in',
-                              style: TextStyle(fontSize: 20)),
-                        ) : ElevatedButton(
-                          onPressed: () async {
-                            Client client = Client(name: result!.code.toString(), date: widget.currentDay, checkInTime: widget.currentTime, checkOutTime: widget.currentTime);
-                            client.addCheckOutTime(client);
-                            Navigator.pop(context, (result!.code).toString());
-                          },
-                          child: const Text('Check out',
+                          child: const Text('check',
                               style: TextStyle(fontSize: 20)),
                         ),
                       )
@@ -109,7 +126,7 @@ class _QRSanHourState extends State<QRSanHour> {
 
   Widget _buildQrView(BuildContext context) {
     var scanArea = (MediaQuery.of(context).size.width < 400 ||
-        MediaQuery.of(context).size.height < 400)
+            MediaQuery.of(context).size.height < 400)
         ? 250.0
         : 300.0;
     return QRView(

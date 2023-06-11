@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../components/checkin_checkou_list.dart';
-import '../components/qrscan_hour.dart';
+import '../qr_scan/qrscan_hour.dart';
 import '../components/reusable_button.dart';
 import '../constants.dart';
 
