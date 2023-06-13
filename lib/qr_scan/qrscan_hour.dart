@@ -82,9 +82,7 @@ class _QRSanHourState extends State<QRSanHour> {
                             client.addChekInChekOutTime(client);
                             Navigator.pop(context, (result!.code).toString());
                             ClientWorkTime clientWorkTime = ClientWorkTime(clientName: result!.code.toString());
-                            // clientWorkTime.getClientTime(clientWorkTime);
-                            print(" asdadsadasdasd ${clientWorkTime.checkTimes}");
-                            // clientWorkTime.printData();
+                            clientWorkTime.convert();
                           },
                           child: const Text('Check',
                               style: TextStyle(fontSize: 20)),
