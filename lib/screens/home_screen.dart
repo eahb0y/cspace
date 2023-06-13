@@ -31,7 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       body: IndexedStack(
         index: currentIcon,
-        children: [
+        children: const [
           CheckScreen(),
           CheckListScreen(),
           ProfileScreen(),

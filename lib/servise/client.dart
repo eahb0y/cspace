@@ -11,36 +11,36 @@ class Client {
     required this.date,
     required this.checkInTime,
     required this.checkOutTime,
-});
+  });
 
-  Future addCheckINTime(Client client) async {
-    return await FirebaseFirestore.instance
+  Future addChekInChekOutTime(Client client) async {
+    DocumentSnapshot snap2 = await FirebaseFirestore.instance
         .collection('Maksim Gorkiy')
-        .doc("100 hour")
+        .doc('100 hour')
         .collection(client.name)
         .doc(client.date)
-        .set({"checkIn": client.checkInTime,
-      "checkOut": "---"
-    });
+        .get();
+    try {
+      String snap = snap2['checkIn'];
+      await FirebaseFirestore.instance
+          .collection('Maksim Gorkiy')
+          .doc('100 hour')
+          .collection(client.name)
+          .doc(client.date)
+          .update({
+        'checkIn': snap,
+        'checkOut': client.checkOutTime,
+      });
+    } catch (e) {
+      await FirebaseFirestore.instance
+          .collection('Maksim Gorkiy')
+          .doc('100 hour')
+          .collection(client.name)
+          .doc(client.date)
+          .set({
+        'checkIn': client.checkInTime,
+        'checkOut': "--/--",
+      });
+    }
   }
-
-  Future addCheckOutTime(Client client) async {
-    return await FirebaseFirestore.instance
-        .collection('Maksim Gorkiy')
-        .doc("100 hour")
-        .collection(client.name)
-        .doc(client.date).update({"checkOut": client.checkOutTime});
-  }
-
-
-
-
-// Future <Client?> readUser() async{
-//
-//     print(docUser);
-// }
-
-
 }
-
-

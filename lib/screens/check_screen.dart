@@ -20,28 +20,36 @@ class _CheckScreenState extends State<CheckScreen> {
   String checkIn = "--/--";
   String checkOut = "--/--";
   String employeeName = '-/-';
-  DateFormat dateFormat = DateFormat('yyyy-MM-dd');
+  String currentDay = DateFormat('dd-MM-yyyy').format(DateTime.now());
 
-  // void getUser() async{
-  //   try{
-  //     DocumentSnapshot snap2 = await FirebaseFirestore
-  //         .instance
-  //         .collection('Maksim Gorkiy')
-  //         .doc('Night')
-  //         .collection(employeeName)
-  //         .doc(widget.)
-  //         .get();
-  //     setState(() {
-  //       checkIn = snap2['checkIn'];
-  //       checkOut = snap2['checkOut'];
-  //     });
-  //   }catch(e){
-  //     setState(() {
-  //       checkIn = "--/--";
-  //       checkOut = "--/--";
-  //     });
-  //   }
-  // }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getUser();
+  }
+
+  void getUser() async{
+    try{
+      DocumentSnapshot snap2 = await FirebaseFirestore
+          .instance
+          .collection('Maksim Gorkiy')
+          .doc('Night')
+          .collection(employeeName)
+          .doc(currentDay)
+          .get();
+      setState(() {
+        checkIn = snap2['checkIn'];
+        checkOut = snap2['checkOut'];
+        print(checkIn);
+      });
+    }catch(e){
+      setState(() {
+        checkIn = "--/--";
+        checkOut = "--/--";
+      });
+    }
+  }
 
 
   @override
@@ -65,10 +73,10 @@ class _CheckScreenState extends State<CheckScreen> {
     }
 /*     --------------------------------------------------------------------------------        */
 
-    Status status = Status();
-    setState(() {
-      checkIn = status.checkIn;
-    });
+    // Status status = Status();
+    // setState(() {
+    //   checkIn = status.checkIn;
+    // });
 
     return Scaffold(
         body: SingleChildScrollView(
@@ -200,7 +208,6 @@ class _CheckScreenState extends State<CheckScreen> {
           GestureDetector(
             onTap: () {
               popNavigateEmployee(context);
-                  // currentTime: currentTime, currentDay: currentDay
             },
             child: Container(
               height: screenHeight/4,

@@ -1,38 +1,18 @@
-// import 'package:flutter/material.dart';
-// import 'package:cspace/fetching_data/worker.dart';
+// void getClientTime(ClientWorkTime clientWorkTime) {
+//   List<Map<String, dynamic>> times = [];
 //
-// class Test extends StatefulWidget {
-//   const Test({Key? key}) : super(key: key);
+//   FirebaseFirestore.instance
+//       .collection("Maksim Gorkiy")
+//       .doc("100 hour")
+//       .collection(clientWorkTime.clientName)
+//       .get()
+//       .then((querySnapshot) {
+//     print("Successfully completed");
+//     for (var docSnapshot in querySnapshot.docs) {
+//       // print('${docSnapshot['checkIn']} => ${docSnapshot['checkOut']}');
+//       times.add(docSnapshot.data());
+//     }
 //
-//   @override
-//   State<Test> createState() => _TestState();
-// }
-//
-// class _TestState extends State<Test> {
-//   final controller = TextEditingController();
-//   Worker worker = Worker(name: ' ', time: DateTime.now());
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: Column(
-//         children: [
-//           TextField(
-//             controller: controller,
-//           ),
-//           IconButton(
-//             onPressed: () {
-//               final name = controller.text;
-//               worker.sentDateToServer(
-//                 collectionName: 'worker',
-//                 name: controller.text,
-//                 time: DateTime.timestamp(),
-//               );
-//             },
-//             icon: const Icon(Icons.add),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
+//     clientWorkTime.checkTimes = times;
+//   });
+// },

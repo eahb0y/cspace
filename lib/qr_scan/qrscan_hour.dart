@@ -1,17 +1,17 @@
 import 'dart:developer';
 import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cspace/servise/client_work_time.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:cspace/servise/client.dart';
 
 class QRSanHour extends StatefulWidget {
-  final bool status;
   String currentTime = DateFormat('hh:mm:ss a').format(DateTime.now());
   String currentDay = DateFormat('dd-MM-yyyy').format(DateTime.now());
   QRSanHour({
     Key? key,
-    required this.status
   }) : super(key: key);
 
   @override
@@ -76,22 +76,17 @@ class _QRSanHourState extends State<QRSanHour> {
                     children: <Widget>[
                       Container(
                         margin: const EdgeInsets.all(8),
-                        child: widget.status ?  ElevatedButton(
+                        child: ElevatedButton(
                           onPressed: () async {
                             Client client = Client(name: result!.code.toString(), date: widget.currentDay, checkInTime: widget.currentTime, checkOutTime: widget.currentTime);
-                            client.addCheckINTime(client);
+                            client.addChekInChekOutTime(client);
                             Navigator.pop(context, (result!.code).toString());
+                            ClientWorkTime clientWorkTime = ClientWorkTime(clientName: result!.code.toString());
+                            // clientWorkTime.getClientTime(clientWorkTime);
+                            print(" asdadsadasdasd ${clientWorkTime.checkTimes}");
+                            // clientWorkTime.printData();
                           },
-                          child: const Text('Check in',
-                              style: TextStyle(fontSize: 20)),
-                        ) : ElevatedButton(
-                          onPressed: () async {
-                            String name = result!.code.toString();
-                            Client client = Client(name: name, date: widget.currentDay, checkInTime: widget.currentTime, checkOutTime: widget.currentTime);
-                            client.addCheckOutTime(client);
-                            Navigator.pop(context, name);
-                          },
-                          child: const Text('Check out',
+                          child: const Text('Check',
                               style: TextStyle(fontSize: 20)),
                         ),
                       )
